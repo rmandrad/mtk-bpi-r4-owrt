@@ -15,15 +15,17 @@ rm -rf openwrt
 rm -rf mtk-openwrt-feeds
 
 git clone --branch openwrt-24.10 https://git.openwrt.org/openwrt/openwrt.git openwrt || true
-cd openwrt; git checkout 2bcc3163a6ea02919e699d0562032d821341fabb; cd -;		#OpenWrt v24.10.1: adjust config defaults
+#cd openwrt; git checkout 3a481ae21bdc504f7f0325151ee0cb4f25dfd2cd; cd -;		#toolchain: mold: add PKG_NAME to Makefile
+cd openwrt; git checkout d71e6920fa22a670fdfb76dcd6165c0f3d2d2c2a; cd -;		#mediatek: filogic: fix wifi on ASUS RT-AX52
 
 git clone  https://git01.mediatek.com/openwrt/feeds/mtk-openwrt-feeds || true
-cd mtk-openwrt-feeds; git checkout 9f3e0949fa9624d5ef7262b71ddfbacb6832079a; cd -;	
+#cd mtk-openwrt-feeds; git checkout dfbc4cbf5177b9291807d1d05d3edb76fe509755; cd -;	#Fix patch conflict issue
+cd mtk-openwrt-feeds; git checkout 7ea6b23033d5562b7c7ba6f57fedfb61f5e2b17a; cd -;	#Enalbe spidev_test in default
 
-echo "9f3e0949" > mtk-openwrt-feeds/autobuild/unified/feed_revision
+echo "7ea6b23" > mtk-openwrt-feeds/autobuild/unified/feed_revision
 
 #feeds modification
-#\cp -r my_files/w-feeds.conf.default openwrt/feeds.conf.default
+\cp -r my_files/w-feeds.conf.default openwrt/feeds.conf.default
 
 ### wireless-regdb modification - this remove all regdb wireless countries restrictions
 rm -rf openwrt/package/firmware/wireless-regdb/patches/*.*
